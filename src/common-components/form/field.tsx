@@ -12,9 +12,11 @@ export default function Field({
     <label>
       <div>{label}</div>
       {children}
-      {field.state.meta.errors.map((error, index) => (
-        <span key={index}>{error.message}</span>
-      ))}
+      {field.state.meta.isDirty
+        ? field.state.meta.errors.map((error, index) => (
+            <span key={index}>{error.message}</span>
+          ))
+        : null}
     </label>
   );
 }

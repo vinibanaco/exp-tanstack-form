@@ -1,1 +1,3 @@
-Note: if a validator is defined to the whole form (like `z.object({...})`) it causes all fields to rerender, which is not desirable at all.
+Note 1: if a validator is defined to the whole form (like `z.object({...})`) it causes all fields to rerender, which is not desirable at all.
+
+Note 2: I'm not a fan of what I had to do to make the submit button get disabled upon errors. And I foresee issues with multi-step forms, let's see...
