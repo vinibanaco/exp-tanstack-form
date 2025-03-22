@@ -1,17 +1,16 @@
-import type { PropsWithChildren } from "react";
-
 import { useFieldContext } from ".";
 
-export default function Field({
-  label,
-  children,
-}: PropsWithChildren<{ label: string }>) {
-  const field = useFieldContext();
+export default function CheckboxField({ label }: { label: string }) {
+  const field = useFieldContext<boolean>();
 
   return (
     <label>
-      <div>{label}</div>
-      {children}
+      <input
+        type="checkbox"
+        checked={field.state.value}
+        onChange={(event) => field.handleChange(event.target.checked)}
+      />
+      {label}
       {field.state.meta.isDirty
         ? field.state.meta.errors.map((error, index) => (
             <span key={index}>

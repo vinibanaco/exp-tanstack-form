@@ -1,49 +1,24 @@
-import { z } from "zod";
+import { Navigate, Route, Routes } from "react-router";
 
-import { useAppForm } from "./common-components/form";
+import SignUp from "./pages/sign-up";
+import Step1 from "./pages/sign-up/step-1";
+import Step2 from "./pages/sign-up/step-2";
+
+import { ROUTES } from "./modules/routing/enums";
 
 export default function App() {
-  const form = useAppForm({
-    defaultValues: {
-      username: "",
-      age: 0,
-    },
-    onSubmit: async ({ value }) => {
-      console.log(value);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-    },
-  });
-
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        form.handleSubmit();
-      }}
-      onReset={(e) => {
-        e.preventDefault();
-        form.reset();
-      }}
-    >
-      <form.AppField
-        name="username"
-        children={(field) => <field.TextField label="Full Name" />}
-        validators={{ onChange: z.string().trim().nonempty() }}
-      />
-      <form.AppField
-        name="age"
-        children={(field) => <field.NumberField label="Age" />}
-        validators={{ onChange: z.number().min(13) }}
-      />
+    <Routes>
+      <Route index element={<Navigate to={ROUTES.SIGN_UP.ROOT} replace />} />
 
-      <br />
-      <br />
-      <form.AppForm>
-        <form.Button type="reset">Clear</form.Button>
-      </form.AppForm>
-      <form.AppForm>
-        <form.Button type="submit">Submit</form.Button>
-      </form.AppForm>
-    </form>
+      <Route path={ROUTES.SIGN_UP.ROOT} element={<SignUp />}>
+        <Route
+          index
+          element={<Navigate to={ROUTES.SIGN_UP.STEP_1} replace />}
+        />
+        <Route path={ROUTES.SIGN_UP.STEP_1} element={<Step1 />} />
+        <Route path={ROUTES.SIGN_UP.STEP_2} element={<Step2 />} />
+      </Route>
+    </Routes>
   );
 }
